@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshTwin's | AI Cold-Chain & Shelf-Life Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  /* FreshTwin's Brand Colours: Fresh Green, Deep Forest, Leaf Lime */
+  --blue:#1B7A3E;
+  --blue-light:#27A859;
+  --blue-dim:#155F30;
+  --blue-dark:#0D4521;
+  --blue-deeper:#072D14;
+
+  --accent:#8DC63F;
+  --accent-light:#D4EDAA;
+  --accent-dim:#A8D45A;
+
+  /* Nav / Footer BG Deep Forest Green */
+  --nav-bg:#1B7A3E;
+  --footer-bg:#0D4521;
+
+  /* Page Backgrounds Fresh White / Light Green */
+  --bg-white:#F8FFF9;
+  --bg-light:#EDF7EE;
+  --bg-section:#D9F0DC;
+  --bg-card:#F8FFF9;
+
+  --card-border:rgba(27,122,62,0.18);
+  --card-border-strong:rgba(27,122,62,0.38);
+
+  --text-dark:#0A1F0F;
+  --text-mid:#1A3D22;
+  --text-muted:#4A7A54;
+  --text-light:#7AAB82;
+  --white:#FFFFFF;
+
+  --nav-h:72px;
+  --max-w:1200px;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --display:'Sora',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
+}
+
+body{font-family:var(--font);color:var(--text-dark);background:var(--bg-white);overflow-x:hidden;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg-light);}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px;}
+
+img{display:block;max-width:100%;}
+
+/* ─── NAVBAR ─────────────────────────────────────────── */
+.navbar{
+  position:fixed;top:0;left:0;width:100%;height:var(--nav-h);
+  background:var(--nav-bg);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  z-index:1000;display:flex;align-items:center;
+  padding:0 clamp(16px,5vw,60px);
+  justify-content:space-between;
+  transition:border-color 0.3s;
+  box-shadow:0 2px 24px rgba(13,69,33,0.3);
+}
+.nav-logo{
+  font-family:var(--display);font-size:18px;font-weight:800;
+  color:var(--white);letter-spacing:-0.3px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;text-decoration:none;flex-shrink:0;
+}
+.nav-logo-icon{ color:var(--white);font-size:18px;
+  width:40px;height:40px;
+  background:rgba(255,255,255,0.2);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  font-size:20px;
+}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-logo-text span{font-size:10px;font-family:var(--mono);font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links li button{
+  background:none;border:none;
+  color:rgba(255,255,255,0.85);
+  font-size:11px;font-weight:600;
+  padding:8px 14px;border-radius:7px;
+  transition:all 0.22s var(--ease);
+  cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;
+  position:relative;white-space:nowrap;
+}
+.nav-links li button:hover{color:#fff;background:rgba(255,255,255,0.15);}
+.nav-links li button.active{color:#fff;background:rgba(255,255,255,0.2);}
+.nav-links li button.active::after{
+  content:'';position:absolute;bottom:5px;left:50%;
+  transform:translateX(-50%);width:14px;height:2px;
+  background:var(--accent);border-radius:2px;
+}
+
+.nav-right{display:flex;align-items:center;gap:10px;}
+.btn-demo-nav{
+  background:var(--white);
+  color:var(--blue-dark);border:none;padding:9px 20px;border-radius:8px;
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:all 0.22s;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;white-space:nowrap;
+  box-shadow:0 2px 10px rgba(0,0,0,0.15);
+}
+.btn-demo-nav:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.25);background:var(--accent-light);}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;flex-shrink:0;}
+.hamburger span{width:22px;height:2px;background:#fff;border-radius:2px;transition:0.3s;display:block;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-nav{
+  display:none;position:fixed;top:var(--nav-h);left:0;width:100%;
+  background:var(--blue-dark);backdrop-filter:blur(20px);
+  padding:12px 20px 20px;flex-direction:column;gap:2px;
+  z-index:999;border-bottom:1px solid rgba(255,255,255,0.1);
+  animation:slideDown 0.25s var(--ease-out);
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+.mobile-nav.open{display:flex;}
+.mobile-nav button{
+  background:none;border:none;color:rgba(255,255,255,0.8);
+  font-size:13px;font-weight:600;padding:13px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;font-family:var(--mono);text-align:left;
+  text-transform:uppercase;letter-spacing:1px;
+  transition:color 0.2s,background 0.2s;border-radius:6px;
+}
+.mobile-nav button:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.mobile-nav .mob-cta{
+  margin-top:8px;background:var(--white);
+  color:var(--blue-dark);border:none;padding:13px;
+  border-radius:8px;font-weight:700;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  font-family:var(--mono);
+}
+
+/* ─── PAGE SYSTEM ─────────────────────────────────────── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h);}
+.page.active{display:block;animation:pgIn 0.35s var(--ease);}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── SECTION COMMONS ─────────────────────────────────── */
+.label-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue-dim);margin-bottom:14px;
+}
+.label-tag::before{content:'';width:20px;height:1px;background:var(--blue);}
+.label-tag-white{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,0.8);margin-bottom:14px;
+}
+.label-tag-white::before{content:'';width:20px;height:1px;background:rgba(255,255,255,0.6);}
+
+.section-h2{
+  font-family:var(--display);font-size:clamp(28px,3.5vw,52px);
+  font-weight:800;line-height:1.1;letter-spacing:-0.8px;
+  margin-bottom:10px;
+}
+.section-h2.blue-txt{color:var(--blue-dark);}
+.section-h2.dark{color:var(--text-dark);}
+.section-h2.white{color:var(--white);}
+
+.section-divider{width:56px;height:3px;margin:16px 0 28px;border-radius:2px;}
+.divider-blue{background:linear-gradient(90deg,var(--blue),transparent);}
+.divider-white{background:linear-gradient(90deg,rgba(255,255,255,0.8),transparent);}
+.divider-center{margin:16px auto 28px;}
+
+.para-dark{color:var(--text-mid);line-height:1.85;font-size:17px;}
+.para-light{color:rgba(255,255,255,0.85);line-height:1.85;font-size:17px;}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(16px,4vw,60px);}
+
+/* ─── BUTTONS ─────────────────────────────────────────── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:var(--white);padding:13px 28px;border-radius:8px;
+  text-decoration:none;font-weight:700;font-size:12px;
+  letter-spacing:0.8px;text-transform:uppercase;
+  transition:all 0.25s;font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(27,122,62,0.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(27,122,62,0.5);}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid var(--blue);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;text-decoration:none;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);background:none;cursor:pointer;
+}
+.btn-secondary:hover{background:rgba(27,122,62,0.08);border-color:var(--blue-dim);}
+
+.btn-white{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--white);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,0.12);
+}
+.btn-white:hover{transform:translateY(-2px);background:var(--accent-light);box-shadow:0 8px 28px rgba(0,0,0,0.2);}
+
+/* ─── STATUS BADGES ─────────────────────────────── */
+.risk-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  font-size:10px;font-weight:700;font-family:var(--mono);letter-spacing:0.5px;
+}
+.risk-blue{background:rgba(27,122,62,0.1);color:var(--blue-dim);border:1px solid rgba(27,122,62,0.28);}
+.risk-light{background:rgba(212,237,170,0.5);color:var(--blue-dark);border:1px solid rgba(27,122,62,0.25);}
+.risk-green{background:rgba(16,185,129,0.1);color:#059669;border:1px solid rgba(16,185,129,0.25);}
+.risk-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
+/* ─── HERO ─────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(140deg,rgba(237,247,238,0.97) 0%,rgba(217,240,220,0.95) 40%,rgba(195,230,200,0.95) 100%);
+  padding:clamp(60px,10vw,100px) 0 clamp(50px,8vw,80px);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(27,122,62,0.12) 0%,transparent 70%);
+}
+.hero-inner{
+  max-width:var(--max-w);margin:0 auto;
+  padding:0 clamp(16px,4vw,60px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);
+  align-items:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(27,122,62,0.12);border:1px solid rgba(27,122,62,0.3);
+  border-radius:30px;padding:6px 16px;
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  color:var(--blue-dim);letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:22px;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+h1{
+  font-family:var(--display);font-size:clamp(34px,5vw,64px);
+  font-weight:800;line-height:1.06;letter-spacing:-1.5px;color:var(--text-dark);
+  margin-bottom:6px;
+}
+h1 .green{color:var(--blue);}
+h1 .dark-green{color:var(--blue-dark);}
+.hero-rule{width:48px;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-light));border-radius:2px;margin:20px 0;}
+.hero-body{font-size:17px;color:var(--text-mid);line-height:1.8;margin-bottom:28px;max-width:540px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+
+.hero-mini-stats{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+.hero-mini-card{
+  background:rgba(255,255,255,0.8);
+  border:1px solid rgba(27,122,62,0.2);
+  border-radius:12px;padding:14px 18px;min-width:140px;
+  backdrop-filter:blur(8px);
+}
+.hero-mini-card strong{
+  display:block;font-family:var(--display);
+  font-size:22px;font-weight:800;color:var(--blue-dark);
+}
+.hero-mini-card span{font-size:11px;color:var(--text-muted);font-family:var(--mono);}
+
+/* DASHBOARD CARD */
+.score-card{
+  background:#fff;border-radius:18px;
+  border:1px solid rgba(27,122,62,0.18);
+  padding:24px;box-shadow:0 8px 40px rgba(27,122,62,0.12);
+}
+.score-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.score-card-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+.dashboard-title{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text-dark);}
+.live-dot-wrap{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--blue);letter-spacing:1.5px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:pulse 1.5s infinite;}
+.score-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(27,122,62,0.08);}
+.score-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;}
+.score-icon.blue-bg{background:rgba(27,122,62,0.12);color:var(--blue-dim);}
+.score-icon.light-bg{background:rgba(141,198,63,0.2);color:var(--blue-dark);}
+.score-icon.green-bg{background:rgba(16,185,129,0.1);color:#059669;}
+.score-lbl{flex:1;font-size:12px;color:var(--text-muted);}
+.score-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big{display:flex;align-items:center;gap:16px;margin-top:18px;padding:16px;background:linear-gradient(135deg,rgba(27,122,62,0.08),rgba(141,198,63,0.12));border-radius:12px;border:1px solid rgba(27,122,62,0.15);}
+.score-big-num{font-family:var(--display);font-size:48px;font-weight:800;color:var(--blue);line-height:1;}
+.score-big-info .label{font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big-info .sub{font-size:11px;color:var(--text-muted);margin-top:3px;font-family:var(--mono);}
+
+/* ─── STATS STRIP ─────────────────────────────────────── */
+.section-blue{
+  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-deeper) 100%);
+  padding:clamp(60px,8vw,96px) 0;
+}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;
+}
+.stat-card{
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  border-radius:16px;padding:clamp(20px,3vw,30px);
+  text-align:center;transition:transform 0.25s,border-color 0.25s;
+}
+.stat-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.3);}
+.stat-num{font-family:var(--display);font-size:clamp(32px,4vw,48px);font-weight:800;color:#fff;margin-bottom:10px;}
+.stat-lbl{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;}
+
+/* ─── PLATFORM SECTION ─────────────────────────────────── */
+.platform-section{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.platform-sub{max-width:760px;margin-bottom:44px;color:var(--text-mid);}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.platform-card{
+  background:#fff;border:1px solid rgba(27,122,62,0.15);
+  border-radius:18px;overflow:hidden;
+  transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;
+  box-shadow:0 2px 12px rgba(27,122,62,0.06);
+}
+.platform-card:hover{border-color:rgba(27,122,62,0.35);box-shadow:0 12px 40px rgba(27,122,62,0.12);transform:translateY(-3px);}
+.platform-img-wrap{width:100%;height:180px;overflow:hidden;background:linear-gradient(135deg,var(--bg-light),var(--bg-section));}
+.platform-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.platform-card .inner{padding:22px;}
+.element-badge{
+  display:inline-block;background:rgba(27,122,62,0.1);
+  color:var(--blue-dim);border-radius:6px;
+  padding:3px 10px;font-family:var(--mono);font-size:9px;
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:12px;border:1px solid rgba(27,122,62,0.18);
+}
+.platform-card h3{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text-dark);margin-bottom:10px;line-height:1.3;}
+.platform-card p{font-size:13px;color:var(--text-muted);line-height:1.75;}
+.more-text{display:none;font-size:13px;color:var(--text-muted);line-height:1.75;margin-top:10px;padding-top:10px;border-top:1px solid rgba(27,122,62,0.1);}
+.platform-card.open .more-text{display:block;}
+.expand-btn{
+  margin-top:16px;background:none;border:1px solid rgba(27,122,62,0.28);
+  color:var(--blue-dim);padding:7px 18px;border-radius:7px;
+  font-size:11px;font-weight:700;cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;transition:all 0.2s;
+}
+.expand-btn:hover{background:rgba(27,122,62,0.08);border-color:var(--blue);}
+
+/* platform icon placeholders */
+.platform-icon-bg{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:56px;
+  background:linear-gradient(135deg,var(--bg-light),var(--bg-section));
+}
+
+/* ─── WHY SECTION ─────────────────────────────────────── */
+.why-section{background:var(--bg-light);padding:clamp(60px,8vw,96px) 0;}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+.why-card{
+  background:#fff;border:1px solid rgba(27,122,62,0.15);
+  border-radius:16px;padding:clamp(20px,3vw,30px);
+  transition:border-color 0.25s,box-shadow 0.25s;
+}
+.why-card:hover{border-color:rgba(27,122,62,0.35);box-shadow:0 8px 28px rgba(27,122,62,0.1);}
+.why-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(27,122,62,0.12),rgba(141,198,63,0.2));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;font-size:20px;color:var(--blue);
+  border:1px solid rgba(27,122,62,0.18);
+}
+.why-card h4{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:10px;}
+.why-card p{font-size:13px;color:var(--text-muted);line-height:1.75;}
+
+/* ─── SECTION LIGHT / ALT ─────────────────────────────── */
+.section-light{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.section-alt{background:var(--bg-light);padding:clamp(60px,8vw,96px) 0;}
+
+/* ─── MARKET CHARTS ─────────────────────────────────────── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px;}
+.chart-card{
+  background:#fff;border:1px solid rgba(27,122,62,0.15);
+  border-radius:18px;padding:24px;
+  box-shadow:0 4px 16px rgba(27,122,62,0.06);
+}
+.chart-card h4{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.chart-card p{font-size:12px;color:var(--text-muted);margin-bottom:20px;font-family:var(--mono);}
+.chart-wrap{height:260px;position:relative;}
+
+/* ─── ABOUT PAGE ─────────────────────────────────────────── */
+.about-hero{
+  background:linear-gradient(140deg,#D9F0DC 0%,#C3E6C8 60%,#8DC63F 100%);
+  padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);
+  position:relative;overflow:hidden;
+}
+.about-hero::after{
+  content:'';position:absolute;bottom:-60px;left:-60px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(27,122,62,0.15) 0%,transparent 70%);
+}
+.about-hero .container{position:relative;z-index:1;}
+.founders-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px;}
+.founder-card{
+  background:#fff;border:1px solid rgba(27,122,62,0.15);
+  border-radius:18px;padding:clamp(20px,3vw,36px);
+  box-shadow:0 4px 20px rgba(27,122,62,0.08);
+}
+.founder-img{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-dark));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;}
+.founder-card h3{font-family:var(--display);font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.founder-card .role{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:14px;}
+.founder-card p{font-size:13px;color:var(--text-muted);line-height:1.8;}
+.founder-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.f-badge{background:rgba(27,122,62,0.08);border:1px solid rgba(27,122,62,0.18);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:10px;color:var(--blue-dim);letter-spacing:0.5px;}
+
+/* ─── FAQ ─────────────────────────────────────────────── */
+.faq-wrap{display:flex;flex-direction:column;gap:12px;margin-top:32px;}
+.faq-item{background:#fff;border:1px solid rgba(27,122,62,0.15);border-radius:14px;overflow:hidden;}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;gap:16px;}
+.faq-q h4{font-family:var(--display);font-size:15px;font-weight:600;color:var(--text-dark);}
+.faq-icon{font-size:20px;font-weight:300;color:var(--blue);flex-shrink:0;transition:transform 0.3s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-body{display:none;padding:0 22px 18px;font-size:14px;color:var(--text-muted);line-height:1.8;border-top:1px solid rgba(27,122,62,0.08);}
+.faq-item.open .faq-body{display:block;}
+
+/* ─── PRICING ─────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;}
+.price-card{
+  background:#fff;border:1px solid rgba(27,122,62,0.15);
+  border-radius:18px;padding:clamp(22px,3vw,36px);
+  position:relative;transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;
+  box-shadow:0 4px 16px rgba(27,122,62,0.06);
+}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(27,122,62,0.14);}
+.price-card.featured{
+  border:2px solid var(--blue);
+  box-shadow:0 8px 40px rgba(27,122,62,0.18);
+  transform:scale(1.03);
+}
+.price-card.featured:hover{transform:scale(1.03) translateY(-4px);}
+.featured-label{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:#fff;padding:4px 18px;border-radius:20px;
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  white-space:nowrap;
+}
+.price-tier{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:8px;}
+.price-title{font-family:var(--display);font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:12px;}
+.price-amount{font-family:var(--display);font-size:clamp(34px,4vw,48px);font-weight:800;color:var(--blue-dark);line-height:1;}
+.price-amount span{font-size:16px;font-weight:500;color:var(--text-muted);}
+.price-desc{font-size:13px;color:var(--text-muted);margin:12px 0 20px;line-height:1.6;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.price-features li{font-size:13px;color:var(--text-mid);display:flex;align-items:flex-start;gap:8px;}
+.price-features li::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0;margin-top:1px;}
+
+/* ─── PROCESS ─────────────────────────────────────────── */
+.process-step{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(30px,5vw,72px);align-items:center;
+  margin-bottom:clamp(56px,8vw,96px);
+}
+.process-step:last-child{margin-bottom:0;}
+.step-num{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:12px;}
+.step-h3{font-family:var(--display);font-size:clamp(22px,2.5vw,32px);font-weight:800;color:var(--text-dark);margin-bottom:16px;line-height:1.2;}
+.step-p{color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:18px;}
+.step-img{width:100%;aspect-ratio:16/10;border-radius:16px;border:1px solid rgba(27,122,62,0.15);overflow:hidden;box-shadow:0 8px 32px rgba(27,122,62,0.1);background:linear-gradient(135deg,var(--bg-light),var(--bg-section));display:flex;align-items:center;justify-content:center;font-size:64px;}
+
+/* ─── CONTACT ─────────────────────────────────────────── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,72px);}
+.form-card{background:#fff;border:1px solid rgba(27,122,62,0.15);border-radius:18px;padding:clamp(22px,3vw,40px);box-shadow:0 4px 20px rgba(27,122,62,0.08);}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:12px;font-weight:700;color:var(--text-dark);margin-bottom:7px;font-family:var(--mono);letter-spacing:0.5px;text-transform:uppercase;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:12px 16px;border:1.5px solid rgba(27,122,62,0.18);
+  border-radius:10px;font-size:14px;font-family:var(--font);
+  color:var(--text-dark);background:#fff;
+  transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,122,62,0.1);}
+.form-group textarea{min-height:120px;resize:vertical;}
+.contact-info{display:flex;flex-direction:column;gap:0;}
+.contact-info h3{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:16px;}
+.contact-info p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;}
+.contact-detail{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(27,122,62,0.1);}
+.contact-detail .icon{width:44px;height:44px;background:rgba(27,122,62,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--blue);flex-shrink:0;font-size:18px;}
+.contact-detail .text strong{display:block;font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:2px;}
+.contact-detail .text span{font-size:13px;color:var(--text-muted);}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer{background:var(--footer-bg);padding:clamp(48px,6vw,80px) 0 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+.footer-brand{font-family:var(--display);font-size:22px;font-weight:800;color:#fff;margin-bottom:14px;}
+.footer-desc{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:20px;}
+.footer-badges{display:flex;flex-wrap:wrap;gap:8px;}
+.footer-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.8);letter-spacing:0.5px;}
+.footer-col-title{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:16px;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;transition:color 0.2s;}
+.footer-col a:hover{color:#fff;}
+.footer-bottom-bar{border-top:1px solid rgba(255,255,255,0.1);padding:20px 0;display:flex;align-items:center;justify-content:space-between;}
+.footer-bottom-bar p{font-size:12px;color:rgba(255,255,255,0.45);font-family:var(--mono);}
+.footer-bottom-bar p span{color:rgba(255,255,255,0.7);}
+.footer-bottom-links{display:flex;gap:20px;}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,0.5);cursor:pointer;font-family:var(--mono);transition:color 0.2s;}
+.footer-bottom-links a:hover{color:rgba(255,255,255,0.85);}
+
+/* ─── COMPARISON TABLE ───────────────────────── */
+.comp-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:40px;border-radius:16px;border:1px solid rgba(27,122,62,0.15);box-shadow:0 4px 16px rgba(27,122,62,0.06);}
+.comp-table{width:100%;border-collapse:collapse;background:#fff;}
+.comp-table th{background:linear-gradient(135deg,var(--blue-dark),var(--blue-deeper));color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:16px 18px;text-align:left;}
+.comp-table th:first-child{border-radius:16px 0 0 0;}
+.comp-table th:last-child{border-radius:0 16px 0 0;}
+.comp-table td{padding:14px 18px;font-size:13px;color:var(--text-mid);border-bottom:1px solid rgba(27,122,62,0.08);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table tr:hover td{background:rgba(27,122,62,0.03);}
+.comp-table td:first-child{font-weight:600;color:var(--text-dark);}
+.comp-table .yes{color:#059669;font-weight:700;}
+.comp-table .no{color:#94a3b8;font-weight:500;}
+.comp-table .highlight-col{background:rgba(27,122,62,0.06);}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+
+@media(max-width:960px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .btn-demo-nav{display:none;}
+  .hero-inner{grid-template-columns:1fr;gap:40px;}
+  .hero-inner > div:last-child{display:none;}
+  .hero .hero-mini-stats{display:none;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .platform-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .price-card.featured{transform:scale(1);}
+  .process-step{grid-template-columns:1fr;gap:28px;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .charts-grid{grid-template-columns:1fr;}
+  .founders-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .footer-bottom-bar{flex-direction:column;align-items:flex-start;gap:10px;}
+  .footer-bottom-links{flex-wrap:wrap;gap:12px;}
+}
+
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  .hero-mini-stats{flex-direction:column;}
+  .hero-mini-card{min-width:unset;width:100%;}
+  .btn-primary,.btn-secondary,.btn-white{width:100%;justify-content:center;}
+  .footer-bottom-links{flex-direction:column;gap:8px;}
+}
+
+/* ─── DESKTOP ENHANCEMENTS (1024px+) ─────────────────────── */
+@media(min-width:961px){
+  /* Ensure hamburger is hidden */
+  .hamburger{display:none !important;}
+  .mobile-nav{display:none !important;}
+
+  /* Hero: always show both columns and dashboard */
+  .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;}
+  .hero-inner > div:last-child{display:block !important;}
+  .hero-mini-stats{display:flex !important;}
+  .hero-btns{flex-wrap:nowrap;}
+
+  /* Platform grid: 3 columns */
+  .platform-grid{grid-template-columns:repeat(3,1fr);}
+
+  /* Why grid: 3 columns */
+  .why-grid{grid-template-columns:repeat(3,1fr);}
+
+  /* Pricing: 3 columns side by side */
+  .pricing-grid{grid-template-columns:repeat(3,1fr);}
+  .price-card.featured{transform:scale(1.03);}
+
+  /* Process steps: side by side */
+  .process-step{display:grid;grid-template-columns:1fr 1fr;align-items:center;}
+
+  /* Contact: two columns */
+  .contact-wrap{display:grid;grid-template-columns:1fr 1fr;}
+
+  /* Charts: 2 columns */
+  .charts-grid{grid-template-columns:1fr 1fr;}
+
+  /* Founders: 2 columns */
+  .founders-grid{grid-template-columns:1fr 1fr;}
+
+  /* Footer: 4 columns */
+  .footer-grid{grid-template-columns:2fr 1fr 1fr 1fr;}
+  .footer-bottom-bar{flex-direction:row;align-items:center;}
+}
+
+/* ─── LARGE DESKTOP (1280px+) ─────────────────────────────── */
+@media(min-width:1280px){
+  :root{--max-w:1200px;}
+
+  /* Bigger hero type */
+  h1{font-size:clamp(44px,4.5vw,68px);}
+
+  /* Wider score card */
+  .score-card{padding:28px 32px;}
+
+  /* Platform cards taller image area */
+  .platform-img-wrap{height:200px !important;}
+
+  /* Stat numbers bigger */
+  .stat-num{font-size:clamp(36px,3.5vw,52px);}
+
+  /* Slightly more padding on sections */
+  .platform-section,.why-section,.section-light,.section-alt{
+    padding:clamp(80px,8vw,112px) 0;
+  }
+
+  /* Nav: slightly more spacing */
+  .nav-links{gap:6px;}
+  .nav-links li button{font-size:11.5px;padding:9px 16px;}
+}
+
+/* ─── EXTRA WIDE (1440px+) ─────────────────────────────────── */
+@media(min-width:1440px){
+  :root{--max-w:1280px;}
+  .hero-inner{gap:100px;}
+  .section-h2{font-size:clamp(32px,3.2vw,56px);}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════ -->
+<nav class="navbar">
+  <a class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-icon"><i class="fas fa-leaf"></i></div>
+    <div class="nav-logo-text">
+      FreshTwin's
+      <span>Cold-Chain Intelligence</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><button id="nav-home" class="active" onclick="showPage('home')">Home</button></li>
+    <li><button id="nav-about" onclick="showPage('about')">About</button></li>
+    <li><button id="nav-platform" onclick="showPage('platform')">Platform</button></li>
+    <li><button id="nav-market" onclick="showPage('market')">Market</button></li>
+    <li><button id="nav-process" onclick="showPage('process')">How It Works</button></li>
+    <li><button id="nav-faq" onclick="showPage('faq')">FAQ</button></li>
+    <li><button id="nav-pricing" onclick="showPage('pricing')">Pricing</button></li>
+    <li><button id="nav-contact" onclick="showPage('contact')">Contact</button></li>
+  </ul>
+
+  <div class="nav-right">
+    <button class="btn-demo-nav" onclick="showPage('contact')">Request Demo</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button onclick="showPage('home');closeMobile()">Home</button>
+  <button onclick="showPage('about');closeMobile()">About</button>
+  <button onclick="showPage('platform');closeMobile()">Platform</button>
+  <button onclick="showPage('market');closeMobile()">Market</button>
+  <button onclick="showPage('process');closeMobile()">How It Works</button>
+  <button onclick="showPage('faq');closeMobile()">FAQ</button>
+  <button onclick="showPage('pricing');closeMobile()">Pricing</button>
+  <button onclick="showPage('contact');closeMobile()">Contact</button>
+  <button class="mob-cta" onclick="showPage('contact');closeMobile()">Request Demo →</button>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : HOME
+═══════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero" style="background-image:url('Ahttps://images.unsplash.com/photo-1542838132-92c53300491e?w=1400&q=80');background-size:cover;background-position:center;background-blend-mode:luminosity;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          UK's First AI Cold-Chain & Shelf-Life Intelligence Platform
+        </div>
+        <h1>
+          Predict Decay.<br>
+          <span class="green">Protect</span> Equity.
+          <span class="dark-green">Zero Waste.</span>
+        </h1>
+        <div class="hero-rule"></div>
+        <p class="hero-body">
+          FreshTwin's is an AI-powered cold-chain and shelf-life intelligence platform for UK grocers and hospitality operators. We close the "Shelf-Life Gap" by converting fragmented refrigeration data into automated, margin-protecting perishable quality logic  from inbound receiving to store-level rotation.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Book a Platform Demo</button>
+          <button class="btn-secondary" onclick="showPage('platform')">Explore Platform</button>
+        
+        
+        </div>
+      </div>
+      <!-- DASHBOARD -->
+      <div>
+        <div class="score-card">
+          <div class="score-card-top">
+            <div>
+              <div class="score-card-label">FreshTwin's · Live PerishOps Engine</div>
+              <h3 class="dashboard-title">Cold-Chain Intelligence Dashboard</h3>
+            </div>
+            <div class="live-dot-wrap"><span class="live-dot"></span>LIVE</div>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">TO</div>
+            <span class="score-lbl">Total Orders This Month</span>
+            <span class="score-val">48,760 ↑28%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon green-bg">AC</div>
+            <span class="score-lbl">Active Customers</span>
+            <span class="score-val">32,145 ↑31%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon light-bg">SL</div>
+            <span class="score-lbl">Shelf-Life DNA Accuracy</span>
+            <span class="score-val">94% ↑12%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">RV</div>
+            <span class="score-lbl">Revenue Protected</span>
+            <span class="score-val">£5.26M ↑35%</span>
+          </div>
+          <div class="score-big">
+            <div class="score-big-num">22<span style="font-size:24px;">%</span></div>
+            <div class="score-big-info">
+              <div class="label">Spoilage Error Reduction</div>
+              <div class="sub">SDD Calibration · AI Governed · ↑Rotation Speed 40%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">The UK Food Waste Crisis</div>
+      <h2 class="section-h2 white">UK Grocers Are Losing Billions to<br>the "Shelf-Life Gap."</h2>
+      <div class="section-divider divider-white"></div>
+      <p class="para-light" style="max-width:760px;">
+        The UK's food retail and hospitality sectors generate 9.5 million tonnes of food waste annually, costing the industry £3.2 billion every year. Cold-chain management remains dominated by reactive, manual monitoring  leaving operators blind to cumulative quality loss, micro-climate hotspots, and the institutional "Interpretation Loss" that occurs each time a senior store manager departs. FreshTwin's resolves this through AI-driven Shelf-Life DNA intelligence.
+      </p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">£3.2B</div>
+          <div class="stat-lbl">Annual food waste costs to UK hospitality & retail  75% preventable with predictive shelf-life intelligence</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">9.5M</div>
+          <div class="stat-lbl">Tonnes of food waste generated in the UK annually  with 1.1M tonnes from hospitality & food service alone</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">88%</div>
+          <div class="stat-lbl">Of mid-market UK grocers still rely on manual temperature logs and reactive threshold-based sensors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£10K+</div>
+          <div class="stat-lbl">Average annual waste management cost per UK food outlet  recoverable through FreshTwin's PerishOps intelligence</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM PREVIEW -->
+  <section class="platform-section">
+    <div class="container">
+      <div class="label-tag">Core Intelligence Modules</div>
+      <h2 class="section-h2 dark">Six Modules. One Complete PerishOps Intelligence Platform.</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark platform-sub">
+        FreshTwin's combines Inbound Receiving Diagnostics, Real-Time Cabinet Intelligence, Shelf-Life DNA Fingerprinting, Spoilage Risk Scoring, Outcome-Learning Memory, and Federated Quality Benchmarking into one unified SaaS platform  purpose-built for UK mid-market grocers and hospitality operators.
+      </p>
+      <div class="platform-grid">
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:180px;overflow:hidden;"><img src="FRESH1.jpg" alt="Module" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="inner">
+            <div class="element-badge">Module 01</div>
+            <h3>Inbound-to-Inventory Intelligence</h3>
+            <p>A first-of-its-kind framework bridging the gap between receiving-point environmental signals and real-time shelf-life outcomes, creating a continuous feedback loop.</p>
+            <div class="more-text">The Inbound-to-Inventory engine ingests receiving diagnostics and real-time cabinet-level behavioural signals, parsing thermal nuances and mapping them into the proprietary Perishable Quality Ontology (PQO). This allows organisations to move beyond static temperature logs and capture "Shelf-Life DNA" that is often lost to staff turnover  ensuring every delivery is fingerprinted for biological quality from the moment it arrives.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:180px;overflow:hidden;"><img src="FRESH2.jpg" alt="Module" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="inner">
+            <div class="element-badge">Module 02</div>
+            <h3>Shelf-Life DNA Fingerprinting</h3>
+            <p>Machine learning models identify and "fingerprint" thermal patterns of successful cold-chain journeys, benchmarking and cloning optimal storage logic across diverse sites.</p>
+            <div class="more-text">The Quality DNA Fingerprinting engine uses deep-learning thermal modeling and microbial decay analysis to detect cumulative thermal exposure, humidity sensitivity, and recovery lag after door-open events. These risk profiles are mapped to personalised inventory pathways instantly  allowing the business to implement targeted, automated FEFO (First-Expired, First-Out) rotations that satisfy both food safety rigour and commercial profit simultaneously.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:180px;overflow:hidden;"><img src="FRESH3.jpg" alt="Module" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="inner">
+            <div class="element-badge">Module 03</div>
+            <h3>Shelf-Life Delta Diagnostics (SDD)</h3>
+            <p>Automatically diagnoses root causes of premature spoilage by analysing the delta between expected shelf-life and actual quality-loss velocity.</p>
+            <div class="more-text">The SDD engine identifies compressor lag, high-frequency door friction, delivery dwell-time delays, and micro-climate hotspots before they cause spoilage events. Validated to detect pre-spoilage signals with 94% accuracy, it delivers a 65% reduction in manual quality-checking time by automatically identifying batches requiring immediate FEFO rotation. Real-time Spoilage Risk Reports are generated without any manual staff review.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:180px;overflow:hidden;"><img src="FRESH4.jpg" alt="Module" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="inner">
+            <div class="element-badge">Module 04</div>
+            <h3>Outcome-Learning Perishable Memory</h3>
+            <p>Waste events are transformed into "Quality Intelligence" using proprietary algorithms that map unsuccessful outcomes back to their original thermal profile.</p>
+            <div class="more-text">Every spoilage event  whether a batch of dairy reaching early expiry or a meat display exposed to compressor fatigue  is mapped back to its receiving-point thermal fingerprint and stored as institutional "Perishable Equity." This ensures that expert quality-check logic is never lost when senior store managers or chefs depart, allowing new floor staff to reach specialist-level proficiency within 14 days of activation.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:180px;overflow:hidden;"><img src="FRESH5.jpg" alt="Module" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="inner">
+            <div class="element-badge">Module 05</div>
+            <h3>Signal-to-Action Auto-Synthesis</h3>
+            <p>Automatically deconstructs a single environmental signal into a complex, multi-step operational workflow  removing the need for manual staff-to-data translation.</p>
+            <div class="more-text">When a humidity spike, recovery lag, or compressor stress point is detected, the platform automatically synthesises a structured multi-step action plan for floor teams  including immediate FEFO rotation priorities, markdown recommendations, and equipment escalation alerts. Coupled with Risk-Weighted Inventory Evolution, higher-risk product groups are automatically prioritised and refined by the "FEFO Pipeline" in real time.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:180px;overflow:hidden;"><img src="FRESH6.jpg" alt="Module" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="inner">
+            <div class="element-badge">Module 06</div>
+            <h3>Federated Quality Logic Network (FQLN)</h3>
+            <p>An architectural approach to federated learning enabling anonymous "Quality DNA" benchmarks across UK retailers  collectively improving predictive models without sharing private data.</p>
+            <div class="more-text">The FQLN enables anonymised sector-wide cold-chain efficiency insights that allow mid-market grocers to benefit from the intelligence typically reserved for "Big Six" supermarket chains. Trends learned from high-efficiency grocers in London can optimise "Receiving-to-Rotation" strategies for a mid-market retailer in the Midlands, creating a collective intelligence ecosystem that new players would have to start from scratch to replicate.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FRESHTWIN'S -->
+  <section class="why-section">
+    <div class="container">
+      <div class="label-tag">Why FreshTwin's</div>
+      <h2 class="section-h2 dark">From Monitoring Thresholds to Optimising Sellability.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-bullseye"></i></div>
+          <h4>Predictive, Not Reactive</h4>
+          <p>Unlike threshold-based sensors that only report if a fridge is above 8°C, FreshTwin's predicts spoilage risk before a waste event occurs  enabling intervention before a thermal break becomes a financial loss.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-lock"></i></div>
+          <h4>Quality Sovereignty</h4>
+          <p>Grocers own their "Quality Degradation Logic" as a proprietary asset. Expert shelf-life knowledge remains within the business even after key store managers depart  eliminating the institutional "brain drain" of high staff turnover.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-leaf"></i></div>
+          <h4>FSA & Net Zero Aligned</h4>
+          <p>Fully compliant with UK Food Standards Agency requirements, UK GDPR, and Net Zero targets. Auto-generated CFO-ready reports demonstrate how compiled Quality Logic has reduced Margin-at-Risk and carbon footprint.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-wrench"></i></div>
+          <h4>Retrofit-Agnostic</h4>
+          <p>Built to sit above any existing hardware system  fridges, display units, or prep stations. Operators aren't locked into a single equipment manufacturer as they expand their chilled footprint across sites.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-chart-line"></i></div>
+          <h4>SME-Optimised SaaS</h4>
+          <p>Enterprise-grade precision without the "Big Six" consulting price tag. Starting at just £100/month, independent grocers and dark kitchens can access the same shelf-life intelligence used by major supermarket chains.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-handshake"></i></div>
+          <h4>Proven Pilot Results</h4>
+          <p>Pilots across London, Manchester, and Birmingham showed 25–40% increase in rotation speed, 22% reduction in spoilage errors, and 4.6/5 user satisfaction for Interpretation Loss Protection  across 1,200+ tested SKUs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA STRIP -->
+  <section class="section-blue">
+    <div class="container" style="text-align:center;">
+      <div class="label-tag-white" style="justify-content:center;">Ready to Close the Shelf-Life Gap?</div>
+      <h2 class="section-h2 white">Join UK's Leading Grocers<br>Protecting Perishable Equity.</h2>
+      <div class="section-divider divider-white" style="margin:16px auto 28px;"></div>
+      <p class="para-light" style="max-width:600px;margin:0 auto 36px;">
+        Book a live demonstration of the FreshTwin's Cold-Chain Intelligence Platform and see how Shelf-Life DNA fingerprinting, real-time spoilage diagnostics, and automated FEFO rotation can protect your margins from day one.
+      </p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-white" onclick="showPage('contact')">Book Platform Demo</button>
+        <button class="btn-secondary" style="border-color:rgba(255,255,255,0.5);color:#fff;" onclick="showPage('pricing')">View Pricing Plans</button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page-home -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : ABOUT
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-about">
+
+  <section class="about-hero">
+    <div class="container">
+      <div class="label-tag">About FreshTwin's</div>
+      <h2 class="section-h2 dark">Built by Engineers & Operators<br>Who Lived the Shelf-Life Gap.</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:760px;">
+        FreshTwin's was founded by Ripen Patel and Diyam Patel  two professionals who uniquely bridge the worlds of Thermal Physics and Retail Operations. With a combined 17+ years of technical engineering and high-volume retail experience, they built FreshTwin's to solve a problem they experienced first-hand: the "Shelf-Life Gap" causing billions in preventable food waste across the UK's perishable food economy.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Our Mission & Vision</div>
+      <h2 class="section-h2 dark">Fresher Today. Greener Tomorrow.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px;">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-bullseye"></i></div>
+          <h4>Mission Statement</h4>
+          <p>To enable UK grocers to move from "monitoring thresholds" to "optimizing sellability" by leveraging a predictive shelf-life compiler that eliminates the cold-chain gap and protects institutional quality memory.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-globe"></i></div>
+          <h4>Vision Statement</h4>
+          <p>To be the global standard for "PerishOps"  fostering a future in which refrigeration behaviour is automatically synchronised with biological product needs, ensuring continuous inventory readiness and zero-gap margin protection.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:48px;">
+        <div class="label-tag">Core Values</div>
+        <h2 class="section-h2 dark" style="font-size:clamp(22px,2.5vw,34px);">What Drives Every Feature We Build</h2>
+        <div class="section-divider divider-blue"></div>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-lightbulb"></i></div>
+            <h4>Innovation</h4>
+            <p>Continuous refinement of "Inbound-to-Inventory" models to stay ahead of the global velocity of food mobility and climate trends.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-bullseye"></i></div>
+            <h4>Accuracy</h4>
+            <p>A commitment to thermal-biological integrity and the elimination of "interpretation loss" in cold-chain mapping at every store level.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-lock"></i></div>
+            <h4>Sovereignty</h4>
+            <p>Empowering grocers to own their operational quality logic as a proprietary and permanent business asset  never siloed, never lost.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-bolt"></i></div>
+            <h4>Efficiency</h4>
+            <p>Making complex perishable journeys manageable through machine-executable quality pathways and low-friction retrofit integrations.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+            <h4>Stewardship</h4>
+            <p>Equipping store managers and operations directors with the automated foresight needed to scale chilled footprints without headcount-proportional waste costs.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-leaf"></i></div>
+            <h4>Sustainability</h4>
+            <p>Reducing UK retail refrigeration energy waste by 20–30% per institution through precise Shelf-Life DNA optimisation and cabinet set-point routing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="label-tag">Founding Team</div>
+      <h2 class="section-h2 dark">The Founders Behind FreshTwin's</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:760px;margin-bottom:0;">
+        Diyam and Ripen Patel possess the unique ability to unify disparate disciplines. While traditional RetailTech startups are led by generalist software developers, FreshTwin's founders unify Thermal Physics and Retail Operations  equipping them to link technical equipment metrics (like compressor cycles) directly to human outcomes (like stock rotation and margin protection).
+      </p>
+      <div class="founders-grid">
+        <div class="founder-card">
+          <div class="founder-img">RP</div>
+          <h3>Ripen Patel</h3>
+          <div class="role">Co-Founder & CEO · PerishOps Lead</div>
+          <p>MSc Business Management (Brunel University London) with over 8 years of domain authority in UK-based retail leadership. Ripen has managed operations for leading high-volume food service brands including Five Guys UK, overseeing complex cold-chain compliance and inventory rotation programs. His hands-on experience with "manual-log fatigue," shift leadership, and inventory governance gives FreshTwin's its operational grounding.</p>
+          <div style="margin-bottom:14px;"><a href="https://www.linkedin.com/in/ripen-patel" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(27,122,62,0.08);border:1px solid rgba(27,122,62,0.2);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;color:var(--blue-dim);text-decoration:none;font-family:var(--mono);letter-spacing:0.5px;transition:all 0.2s;" onmouseover="this.style.background='rgba(27,122,62,0.15)'" onmouseout="this.style.background='rgba(27,122,62,0.08)'"><i class="fab fa-linkedin-in"></i> LinkedIn Profile</a></div>
+            <div class="founder-badges">
+            <span class="f-badge">MSc Business Management</span>
+            <span class="f-badge">Retail Operations</span>
+            <span class="f-badge">Shift Leadership</span>
+            <span class="f-badge">Inventory Governance</span>
+            <span class="f-badge">Five Guys UK</span>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="founder-img">DP</div>
+          <h3>Diyam Patel</h3>
+          <div class="role">Co-Founder & CTO · Technical Lead</div>
+          <p>MSc International Business with Project Management (London Metropolitan University) and BEng Mechanical Engineering with specialized expertise in CAD design, thermal analysis, and Finite Element Analysis (FEA). Diyam leads the development of FreshTwin's Shelf-Life Delta Diagnostics (SDD) engine and the Quality Logic layer, converting raw environmental signals and equipment behaviour into actionable biological shelf-life intelligence.</p>
+          <div style="margin-bottom:14px;"><a href="https://www.linkedin.com/in/diyam-patel" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(27,122,62,0.08);border:1px solid rgba(27,122,62,0.2);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;color:var(--blue-dim);text-decoration:none;font-family:var(--mono);letter-spacing:0.5px;transition:all 0.2s;" onmouseover="this.style.background='rgba(27,122,62,0.15)'" onmouseout="this.style.background='rgba(27,122,62,0.08)'"><i class="fab fa-linkedin-in"></i> LinkedIn Profile</a></div>
+            <div class="founder-badges">
+            <span class="f-badge">Mechanical Engineering</span>
+            <span class="f-badge">Thermal Analysis</span>
+            <span class="f-badge">CAD / SolidWorks</span>
+            <span class="f-badge">FEA Modeling</span>
+            <span class="f-badge">Project Management</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page-about -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : PLATFORM
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-platform">
+  <section style="background:linear-gradient(140deg,#EDF7EE 0%,#D9F0DC 60%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">FreshTwin's Platform</div>
+      <h2 class="section-h2 dark">The Complete PerishOps Intelligence Suite</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:760px;">
+        FreshTwin's Cold-Chain & Shelf-Life Intelligence Platform is the only unified, machine-executable operational system that converts fragmented environmental cold-chain data into actionable inventory quality logic  purpose-built for UK mid-market grocers, hospitality groups, and dark kitchen operators.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Technical Innovation</div>
+      <h2 class="section-h2 dark">What Makes FreshTwin's Novel</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-microscope"></i></div>
+          <h4>Perishable Quality Ontology (PQO)</h4>
+          <p>A proprietary schema that converts raw sensor data into structured "Quality Objects"  ensuring biological nuances of specific categories (dairy, meat, deli) are preserved during transition to store-level execution.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-dna"></i></div>
+          <h4>Quality DNA Fingerprinting</h4>
+          <p>Machine learning identifies thermal patterns of successful cold-chain journeys. The system fingerprints specific micro-climate hotspots and high-frequency door opening patterns, enabling automated FEFO rotation.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-satellite-dish"></i></div>
+          <h4>Thermal Signal Forensics Engine</h4>
+          <p>Custom Kinetic Decay Classifier detecting "Pre-Spoilage Signals" in refrigerated assets with 94% accuracy  significantly outperforming traditional threshold-based alarm systems.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-server"></i></div>
+          <h4>Perishable Digital Twin Simulation</h4>
+          <p>Virtually tests the impact of a proposed operational change (e.g., adjusting set-points or night-blind schedules) against historical thermal data to predict spoilage risks before real-world implementation.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-sync-alt"></i></div>
+          <h4>Risk-Weighted Inventory Evolution</h4>
+          <p>A self-optimising process where rotations for higher-risk product groups (based on real-time degradation trends) are automatically prioritised and refined by the platform's FEFO Pipeline.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-clipboard-list"></i></div>
+          <h4>Machine-in-the-Loop Stewardship Index</h4>
+          <p>A composite measure assessing reliability of automated cold-chain workflows, reducing the 70% "manual-checking" bottleneck while maintaining human oversight for complex stock-handling exceptions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="label-tag">Competitive Advantage</div>
+      <h2 class="section-h2 dark">FreshTwin's vs The Market</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="margin-bottom:0;">Competitors face a layered, UK-specific technical moat that cannot be replicated without years of localised, outcome-specific biological data.</p>
+      <div class="comp-table-wrap">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Feature / Capability</th>
+              <th>Legacy Compliance (Checkit)</th>
+              <th>Niche Tags (Wiliot)</th>
+              <th>Binary Sensors</th>
+              <th>Manual Logs</th>
+              <th class="highlight-col">FreshTwin's (Proposed)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Inbound-to-Inventory Lifecycle</td><td class="no">No (Manual entry)</td><td class="no">No (Logistics focus)</td><td class="no">Limited (Alert only)</td><td class="no">No</td><td class="yes highlight-col">✓ Automated signal-to-action</td></tr>
+            <tr><td>Thermal-Microbial Synthesis</td><td class="no">No</td><td class="no">No</td><td class="no">General (Not biological)</td><td class="no">No</td><td class="yes highlight-col">✓ Proprietary PQO mapping</td></tr>
+            <tr><td>UK-Specific Food Safety Benchmarks</td><td class="no">No</td><td class="no">Global-centric</td><td class="no">No</td><td class="no">Limited</td><td class="yes highlight-col">✓ Focused on UK FSA Logic</td></tr>
+            <tr><td>Shelf-Life DNA & Signal Mapping</td><td class="no">Limited (Tags only)</td><td class="no">Checklists only</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ Thermal intent to quality</td></tr>
+            <tr><td>Outcome-Learning Quality Memory</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ Integrated waste matching</td></tr>
+            <tr><td>Perishable Equity Analytics</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ Spoilage-to-Margin tracking</td></tr>
+            <tr><td>Federated Quality Network (FQLN)</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ Anonymised Sector Benchmarking</td></tr>
+            <tr><td>Target Customer Segment</td><td>Global Enterprise</td><td>Supply Chain</td><td>Individual Stores</td><td>General Retail</td><td class="highlight-col" style="color:var(--blue-dark);font-weight:700;">UK Mid-Market Grocers & Hospitality</td></tr>
+            <tr><td>Cost Structure</td><td>Per-asset high fee</td><td>Subscription</td><td>Tool-based</td><td>Time-intensive</td><td class="yes highlight-col">SME-optimised SaaS + Margin Protection</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-platform -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : MARKET
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-market">
+  <section style="background:linear-gradient(140deg,#EDF7EE 0%,#D9F0DC 60%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Market Analysis</div>
+      <h2 class="section-h2 dark">A £14.2B UK Market Underserved<br>by Reactive Technology</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:760px;">
+        The global market for AI-driven cold-chain management was estimated at USD 12.4 billion in 2024, projected to grow to USD 16.5 billion in 2025 with a CAGR of 26.8% through 2034. The UK food-service and convenience retail technology market was valued at approximately £14.2 billion in 2024  with only 12% of mid-market grocers having moved beyond manual threshold-and-alarm monitoring.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Market Data & Validation</div>
+      <h2 class="section-h2 dark">The Numbers Behind the Opportunity</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h4>UK PerishOps Market by Segment</h4>
+          <p>Serviceable Addressable Market (£ Millions)</p>
+          <div class="chart-wrap"><canvas id="chartSector"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>Industry Pain Points</h4>
+          <p>% of UK retail operators affected</p>
+          <div class="chart-wrap"><canvas id="chartRootCause"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>Competitive Intelligence Radar</h4>
+          <p>FreshTwin's vs Market Alternatives</p>
+          <div class="chart-wrap"><canvas id="chartRadar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>AI PerishOps Market Growth</h4>
+          <p>Global Market USD Billion + UK Adoption %</p>
+          <div class="chart-wrap"><canvas id="chartGrowth"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="label-tag">Regional Insights</div>
+      <h2 class="section-h2 dark">UK Launch Strategy by Region</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-city"></i></div>
+          <h4>London  Primary Launch Hub</h4>
+          <p>London represents over 25% of all UK hospitality and convenience revenue. The value of "Perishable Equity" per SKU is estimated to be 35% higher than the national average  making it the ideal launch territory where optimising shelf-life yields the highest financial return.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-rocket"></i></div>
+          <h4>South East  Golden Triangle Belt</h4>
+          <p>The second largest region with an 18% market share in UK retail services. High concentration of high-turnover convenience chains and retail parks, with growth driven by boutique food specialists creating "distributed" inventory requiring centralised Shelf-Life DNA.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-industry"></i></div>
+          <h4>North West & West Midlands</h4>
+          <p>Manchester ("Silicon Canal") and Birmingham are the fastest-growing convenience hubs in the UK, driven by rapid urbanisation and a surge in independent dark kitchens that rely on automated systems to scale but lack enterprise-grade engineering teams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-market -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : PROCESS
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-process">
+  <section style="background:linear-gradient(140deg,#EDF7EE 0%,#D9F0DC 60%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">How FreshTwin's Works</div>
+      <h2 class="section-h2 dark">From Receiving Point to Rotation Logic<br>in Four Intelligent Steps</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:760px;">
+        FreshTwin's establishes a continuous intelligence lifecycle that links inbound receiving diagnostics, real-time cabinet-level behavioural signals, and automated markdown or rotation outcomes  transforming waste from a manual variable into a precise, automated driver of operational margin.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="process-step">
+        <div>
+          <div class="step-num">Phase 01 · Biological Mapping</div>
+          <h3 class="step-h3">Inbound Receiving & Thermal Fingerprinting</h3>
+          <p class="step-p">When perishable goods arrive at your store, FreshTwin's Quality Logic Nodes capture receiving-point environmental signals  including ambient temperature, humidity levels, delivery dwell time, and initial cabinet placement. This data is parsed through the Perishable Quality Ontology (PQO) to create a unique "Thermal Fingerprint" for every batch.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>PQO Schema Applied</span>
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>Thermal DNA Captured</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>Biological Baseline Set</span>
+          </div>
+        </div>
+        <div class="step-img"><img src="FRESH7.jpg" alt="Thermal monitoring" style="width:100%;height:100%;object-fit:cover;"></div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-img"><img src="FRESH8.jpg" alt="DNA analysis" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div>
+          <div class="step-num">Phase 02 · Real-Time Intelligence</div>
+          <h3 class="step-h3">Cabinet-Level Behavioural Signal Monitoring</h3>
+          <p class="step-p">Throughout the product's time on shelf, the Shelf-Life Delta Diagnostics (SDD) engine continuously monitors cabinet-level behavioural signals  including compressor cycles, door-open frequency, night-time recovery patterns, and ambient humidity shifts. When an asset's digital footprint changes, the platform automatically deconstructs the shift into a structured Spoilage Risk Report without requiring manual staff review.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>SDD Engine Active</span>
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>94% Detection Accuracy</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>Zero Manual Review</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div>
+          <div class="step-num">Phase 03 · Automated Action</div>
+          <h3 class="step-h3">Signal-to-Action Synthesis & FEFO Execution</h3>
+          <p class="step-p">The platform's Signal-to-Action Auto-Synthesis converts environmental signals directly into multi-step operational workflows for floor teams. Higher-risk product groups are automatically prioritised in the FEFO Pipeline. Markdown recommendations, rotation priorities, and equipment escalation alerts are delivered in plain language  with no data literacy required from staff.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>FEFO Pipeline Auto-Activated</span>
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>65% Less Manual Checking</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>14-Day Staff Proficiency</span>
+          </div>
+        </div>
+        <div class="step-img"><img src="FRESH9.jpg" alt="Automated actions" style="width:100%;height:100%;object-fit:cover;"></div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-img"><img src="FRESH10.jpg" alt="Analytics growth" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div>
+          <div class="step-num">Phase 04 · Institutional Memory</div>
+          <h3 class="step-h3">Outcome-Learning Perishable Equity Capture</h3>
+          <p class="step-p">Every spoilage event, successful intervention, and quality outcome is mapped back to its original thermal fingerprint and stored as institutional "Perishable Equity." This ensures expert quality-check logic is never lost when senior staff depart, CFO-ready Asset Health Reports link interventions to margin protection, and the Federated Quality Logic Network grows stronger with every rotation cycle across all connected UK stores.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>Institutional Memory Stored</span>
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>CFO-Ready Reports</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>FQLN Growing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-process -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : FAQ
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-faq">
+  <section style="background:linear-gradient(140deg,#EDF7EE 0%,#D9F0DC 60%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Frequently Asked Questions</div>
+      <h2 class="section-h2 dark">Everything You Need to Know<br>About FreshTwin's</h2>
+      <div class="section-divider divider-blue"></div>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="faq-wrap">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>What exactly is the "Shelf-Life Gap" that FreshTwin's solves?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">The Shelf-Life Gap is the critical disconnect between what temperature monitoring systems record (threshold alarms) and what actually determines a product's remaining sellable life (cumulative thermal exposure, micro-climate hotspots, door-open frequency, and biological decay velocity). Most UK food businesses rely on manual logging or basic sensors that only report if a fridge is above 8°C  missing the 72% of quality loss caused by cumulative factors that occur within that threshold. FreshTwin's closes this gap by converting raw environmental signals into biological shelf-life intelligence.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>How does FreshTwin's integrate with our existing refrigeration and EPOS systems?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">FreshTwin's is built on a "Retrofit-Agnostic" architecture designed to sit above any underlying hardware system  fridges, display units, prep stations, or EPOS/ERP retail stacks. Secure "Quality Logic Nodes" are deployed as retrofit IoT sensors that connect to your existing refrigeration assets without requiring replacement. A plug-and-play API platform built on dominant UK retail systems reduces onboarding timelines from weeks to hours. No equipment lock-in, no rip-and-replace.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>What is "Interpretation Loss" and how does FreshTwin's prevent it?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">Interpretation Loss is the institutional knowledge that disappears when an experienced store manager or head chef departs  taking with them the specific "smell-test" logic they've built around which display units cause problems, which SKU categories are most sensitive, and which interventions actually protect quality. FreshTwin's captures this expert knowledge into structured Shelf-Life DNA  a proprietary institutional asset the business owns permanently. New part-time floor staff can reach specialist-level proficiency within 14 days of system activation, compared to a historical average of 45 days.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>Is FreshTwin's compliant with UK Food Standards Agency (FSA) and UK GDPR requirements?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">Yes. FreshTwin's is strategically designed to align with the UK's evolving AI regulatory landscape, specifically the "Pro-innovation approach to AI regulation" set out by DSIT. The platform enables grocers to track, measure, and audit every automated quality interaction with high-fidelity logs and verifiable Quality Logic chains  providing a robust, audit-ready trail for FSA regulatory inquiries and local Environmental Health Officers. All operational data handling adheres to strict ICO guidance and UK GDPR principles, with data captured locally via secure Quality Logic Nodes.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>What results have pilot deployments achieved?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">Across 8-week pilots in London, Manchester, and Birmingham covering 5 retail locations and 1,200+ tested SKUs: 25–40% average increase in rotation speed (FEFO compliance) through automated FEFO path synthesis; 22% reduction in spoilage errors through real-time SDD calibration; 28% average increase in rotation speed following simulated thermal risks; 18% reduction in premature spoilage and margin-at-risk events; 4.6/5 user satisfaction for "Interpretation Loss Protection" and 4.2/5 for "Ease of EPOS and Refrigeration Integration." New retail hires reached quality-check proficiency within 14 days vs a historical 45-day average.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>What is the Federated Quality Logic Network (FQLN) and how does it benefit my store?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">The FQLN is a federated learning architecture that enables anonymised "Quality DNA" benchmarks from dozens of UK retail sites to constantly improve predictive models without sharing sensitive commercial data. Trends learned from high-efficiency grocers in London can optimise "Receiving-to-Rotation" strategy for a mid-market retailer in the Midlands  creating a collective intelligence ecosystem. As more stores join, every participant benefits from sector-wide insights that were previously only available to "Big Six" supermarket chains with dedicated R&D budgets.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>How quickly can we get started and what does onboarding look like?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">Once Quality Logic Nodes are deployed and EPOS/refrigeration stack integrations are stabilised (typically 1–2 weeks for a pilot site), the "Shelf-Life DNA" configuration template is standardised  keeping the onboarding cost for subsequent sites exceptionally low. Our Professional Services team provides a Biological Audit Validation and Cold-Chain Logic Orchestration Setup (£400 onboarding fee). The platform then runs autonomously, with automated workflows handling the core operations from day one. Book a demo via our Contact page to receive a tailored onboarding timeline for your specific store estate.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-faq -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : PRICING
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-pricing">
+  <section style="background:linear-gradient(140deg,#EDF7EE 0%,#D9F0DC 60%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Pricing & Plans</div>
+      <h2 class="section-h2 dark">PerishOps Intelligence for Every Scale of UK Operator</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;">
+        Tiered SaaS subscriptions starting at £100/month  designed to scale alongside your inventory volume, from basic shelf-life tracking through to full-spectrum machine-executable Inbound-to-Inventory quality logic.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-tier">Starter</div>
+          <div class="price-title">FreshTwin's Starter</div>
+          <div class="price-amount">£100<span>/month</span></div>
+          <p class="price-desc">For small independent grocers, boutique delis & dark kitchens entering PerishOps intelligence.</p>
+          <ul class="price-features">
+            <li>Basic shelf-life tracking & visualisation</li>
+            <li>Shelf-Life DNA visualisation (1 category type)</li>
+            <li>Framework-agnostic mapping</li>
+            <li>Quality Logic Node connectivity (up to 5 assets)</li>
+            <li>Temperature threshold alerts</li>
+            <li>Basic FSA compliance reporting</li>
+            <li>Email support</li>
+          </ul>
+          <button class="btn-secondary" onclick="showPage('contact')" style="width:100%;justify-content:center;">Get Started</button>
+        </div>
+        <div class="price-card featured">
+          <div class="featured-label">Most Popular · Best Value</div>
+          <div class="price-tier">Professional</div>
+          <div class="price-title">FreshTwin's Professional</div>
+          <div class="price-amount">£300<span>/month</span></div>
+          <p class="price-desc">For mid-market retail groups and regional convenience franchises scaling PerishOps across multiple sites.</p>
+          <ul class="price-features">
+            <li>Full Shelf-Life Delta Diagnostics (SDD)</li>
+            <li>Signal-to-Action Auto-Synthesis</li>
+            <li>EPOS/ERP integrations</li>
+            <li>SDD validation & quality benchmarking</li>
+            <li>Outcome-Learning Perishable Memory</li>
+            <li>Multi-category (dairy, meat, deli) support</li>
+            <li>Priority support & onboarding assistance</li>
+            <li>Monthly Perishable Equity reports</li>
+          </ul>
+          <button class="btn-primary" onclick="showPage('contact')" style="width:100%;justify-content:center;">Start Free Trial</button>
+        </div>
+        <div class="price-card">
+          <div class="price-tier">Enterprise</div>
+          <div class="price-title">FreshTwin's Enterprise</div>
+          <div class="price-amount">£400<span>/month</span></div>
+          <p class="price-desc">For global retail groups, multi-site hospitality franchises & dark kitchen networks requiring full PerishOps sovereignty.</p>
+          <ul class="price-features">
+            <li>Full Inbound-to-Inventory Pipeline</li>
+            <li>Secure Quality Logic Nodes (unlimited assets)</li>
+            <li>FQLN access & federated benchmarking</li>
+            <li>Dedicated PerishOps Success Manager</li>
+            <li>Custom Perishable Digital Twin Simulation</li>
+            <li>CFO-ready Asset Health Reports</li>
+            <li>Annual PerishOps Audit included</li>
+            <li>White-glove onboarding & SLA guarantee</li>
+          </ul>
+          <button class="btn-secondary" onclick="showPage('contact')" style="width:100%;justify-content:center;">Contact Sales</button>
+        </div>
+      </div>
+
+      <div style="margin-top:56px;">
+        <div class="label-tag">Professional Add-Ons</div>
+        <h2 class="section-h2 dark" style="font-size:clamp(22px,2vw,30px);">Additional Services & One-Off Fees</h2>
+        <div class="section-divider divider-blue"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="addons-grid">
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-wrench"></i></div>
+            <h4>Cold-Chain Orchestration Setup  £600/site</h4>
+            <p>One-off technical integration fee covering Quality Logic Node deployment, thermal environment testing, and EPOS/ERP configuration. Standardised after first site  subsequent onboarding takes hours, not weeks.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-dna"></i></div>
+            <h4>Quality DNA Audit  £400/audit</h4>
+            <p>Specialised multi-category baseline validation covering dairy, meat, deli and ambient SKU categories. Establishes the store-specific Thermal Fingerprint that drives all subsequent FEFO automation.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-chart-bar"></i></div>
+            <h4>Premium Quality Reports  £1,500–£4,000/year</h4>
+            <p>Advanced sector benchmarking and "Perishable Equity" growth insights. Annual institutional subscription providing CFO-ready Margin-at-Risk analysis and Net Zero contribution reporting.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-handshake"></i></div>
+            <h4>Annual PerishOps Audit  Custom Pricing</h4>
+            <p>Comprehensive operational review including Shelf-Life DNA accuracy validation, FEFO compliance assessment, equipment health scoring, and strategic Perishable Equity roadmap for the coming year.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-pricing -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE : CONTACT
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <section style="background:linear-gradient(140deg,#EDF7EE 0%,#D9F0DC 60%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Get In Touch</div>
+      <h2 class="section-h2 dark">Request a Demo or Join<br>the FreshTwin's Pilot Programme</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;">
+        Ready to close the Shelf-Life Gap? Whether you're an independent grocer, convenience franchise, or hospitality group  our team will demonstrate exactly how FreshTwin's PerishOps Intelligence can protect your margins from day one.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="contact-wrap">
+        <div class="form-card">
+          <div class="label-tag">Request Demo</div>
+          <h3 style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:24px;">Book a Platform Demonstration</h3>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="e.g. Sarah Johnson">
+          </div>
+          <div class="form-group">
+            <label>Business Name</label>
+            <input type="text" placeholder="e.g. Central Park Grocers Ltd">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="sarah@yourgrocer.co.uk">
+          </div>
+          <div class="form-group">
+            <label>Business Type</label>
+            <select>
+              <option>Independent Grocer / Convenience Store</option>
+              <option>Multi-Site Franchise / Retail Group</option>
+              <option>Hospitality Group / Restaurant Chain</option>
+              <option>Dark Kitchen / QSR Operator</option>
+              <option>Food Service / Catering Business</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Number of Sites</label>
+            <select>
+              <option>1 site (Single Location)</option>
+              <option>2–5 sites</option>
+              <option>6–20 sites</option>
+              <option>20+ sites</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message / Questions</label>
+            <textarea placeholder="Tell us about your current cold-chain challenges, which SKU categories are most problematic, or what's driving your interest in FreshTwin's..."></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%;justify-content:center;">Book My Platform Demo →</button>
+        </div>
+
+        <div class="contact-info">
+          <h3>Get in Touch Directly</h3>
+          <p>Our founding team personally reviews every demo request and will respond within 24 hours with a tailored demonstration plan for your store estate.</p>
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <div class="text">
+              <strong>Ripen Patel  CEO</strong>
+              <span>ripenpatel009@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-phone"></i></div>
+            <div class="text">
+              <strong>Direct Line</strong>
+              <span>(+44) 7436 959818</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <div class="text">
+              <strong>Diyam Patel  CTO</strong>
+              <span>divyampatel27@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-phone"></i></div>
+            <div class="text">
+              <strong>Technical Enquiries</strong>
+              <span>(+44) 7901 137440</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="text">
+              <strong>Headquarters</strong>
+              <span>London, United Kingdom · UK GDPR Compliant</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-leaf"></i></div>
+            <div class="text">
+              <strong>Certifications</strong>
+              <span>FSA Aligned · Net Zero Committed · UK Cyber Essentials</span>
+            </div>
+          </div>
+          <div style="margin-top:28px;padding:20px;background:linear-gradient(135deg,rgba(27,122,62,0.08),rgba(141,198,63,0.1));border-radius:14px;border:1px solid rgba(27,122,62,0.2);">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:10px;">PILOT PROGRAMME</div>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">We are actively recruiting 8–12 London-based independent grocers and convenience franchises for our next 8-week pilot cohort. Pilot sites receive complimentary Quality Logic Node deployment, SDD calibration, and priority access to the Professional Plan at Starter pricing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page-contact -->
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">FreshTwin's</div>
+        <p class="footer-desc">FreshTwin's Cold-Chain & Shelf-Life Intelligence Platform. Predict Decay. Protect Equity.  Closing the Shelf-Life Gap through Thermal Intelligence for UK grocers and hospitality operators. Fresher Today. Greener Tomorrow.</p>
+        <div class="footer-badges">
+          <span class="footer-badge">FSA Aligned</span>
+          <span class="footer-badge">Net Zero Committed</span>
+          <span class="footer-badge">UK GDPR Compliant</span>
+          <span class="footer-badge">AI Governance Aligned</span>
+        </div>
+   
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <div class="footer-col">
+          <a onclick="showPage('platform')">Inbound-to-Inventory Intelligence</a>
+          <a onclick="showPage('platform')">Shelf-Life DNA Fingerprinting</a>
+          <a onclick="showPage('platform')">Shelf-Life Delta Diagnostics (SDD)</a>
+          <a onclick="showPage('platform')">Outcome-Learning Perishable Memory</a>
+          <a onclick="showPage('platform')">Signal-to-Action Auto-Synthesis</a>
+          <a onclick="showPage('platform')">Federated Quality Logic Network</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-col">
+          <a onclick="showPage('about')">About FreshTwin's</a>
+          <a onclick="showPage('about')">Ripen Patel · Co-Founder & CEO</a>
+          <a onclick="showPage('about')">Diyam Patel · Co-Founder & CTO</a>
+          <a onclick="showPage('process')">How It Works</a>
+          <a onclick="showPage('faq')">FAQ</a>
+          <a onclick="showPage('market')">Market Analysis</a>
+          <a onclick="showPage('pricing')">Pricing & Plans</a>
+          <a onclick="showPage('contact')">Request a Demo</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Solutions</div>
+        <div class="footer-col">
+          <a onclick="showPage('platform')">Independent UK Grocers</a>
+          <a onclick="showPage('platform')">Multi-Site Convenience Franchises</a>
+          <a onclick="showPage('platform')">Dark Kitchens & QSRs</a>
+          <a onclick="showPage('platform')">Hospitality Groups</a>
+          <a onclick="showPage('pricing')">Starter · £100/mo</a>
+          <a onclick="showPage('pricing')">Professional · £300/mo</a>
+          <a onclick="showPage('pricing')">Enterprise · £400/mo</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <p>© 2026 <span>FreshTwin's</span> · London, United Kingdom · UK GDPR Compliant · by Ripen Patel & Diyam Patel</p>
+      <div class="footer-bottom-links">
+        <a onclick="showPage('contact')">Privacy Policy</a>
+        <a onclick="showPage('contact')">Terms of Service</a>
+        <a onclick="showPage('contact')">Confidential Business Plan</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+/* ─── PAGE NAV ───────────────────────────────── */
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+name);
+  if(pg){pg.classList.add('active');}
+  const btn=document.getElementById('nav-'+name);
+  if(btn){btn.classList.add('active');}
+  window.scrollTo({top:0,behavior:'instant'});
+  if(name==='market'&&!window.marketChartsLoaded){initMarketCharts();window.marketChartsLoaded=true;}
+}
+
+function toggleCard(btn){
+  const card=btn.closest('.platform-card');
+  card.classList.toggle('open');
+  btn.innerHTML=card.classList.contains('open')?'Show Less':'Learn More';
+}
+
+function toggleFAQ(el){el.parentElement.classList.toggle('open');}
+
+function closeMobile(){
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+/* ─── CHART THEME ────────────────────────────── */
+const GRN='rgba(27,122,62,1)';
+const GRN2='rgba(27,122,62,0.7)';
+const GRN3='rgba(27,122,62,0.35)';
+const LGND='rgba(141,198,63,0.85)';
+const LGND2='rgba(212,237,170,0.75)';
+const GRID='rgba(27,122,62,0.08)';
+const MUTED='rgba(26,61,34,0.8)';
+
+Chart.defaults.font.family="'IBM Plex Mono', monospace";
+Chart.defaults.font.size=11;
+Chart.defaults.color=MUTED;
+
+/* ─── MARKET CHARTS ──────────────────────────── */
+function initMarketCharts(){
+  // UK PerishOps SAM by Segment
+  new Chart(document.getElementById('chartSector').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Independent Grocers','Multi-Site Franchises','Dark Kitchens & QSRs','Hospitality Groups'],
+      datasets:[{
+        label:'SAM (£ Millions)',
+        data:[145,95,70,90],
+        backgroundColor:[GRN,GRN2,GRN3,LGND],
+        borderRadius:6,barPercentage:0.6
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>'£'+v+'M'}}}}
+  });
+
+  // Pain Points Doughnut
+  new Chart(document.getElementById('chartRootCause').getContext('2d'),{
+    type:'doughnut',
+    data:{
+      labels:['Aware of Shelf-Life Gap (72%)','Manual Checking Unsustainable (81%)','No Predictive Quality System (88%)','Interpretation Loss Risk (68%)','Interest in Predictive QI (86%)'],
+      datasets:[{
+        data:[72,81,88,68,86],
+        backgroundColor:[GRN,GRN2,GRN3,LGND,LGND2],
+        borderColor:['rgba(27,122,62,0.9)','rgba(27,122,62,0.7)','rgba(27,122,62,0.4)','rgba(141,198,63,0.8)','rgba(212,237,170,0.8)'],
+        borderWidth:1.5
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:10,font:{size:10}}}}}
+  });
+
+  // Radar Competitive
+  new Chart(document.getElementById('chartRadar').getContext('2d'),{
+    type:'radar',
+    data:{
+      labels:['Inbound-to-Inventory','Shelf-Life DNA','Predictive SDD','Federated FQLN','UK FSA Compliance','SME Accessibility'],
+      datasets:[
+        {label:'FreshTwin\'s',data:[5,5,5,5,5,5],backgroundColor:'rgba(27,122,62,0.1)',borderColor:GRN,borderWidth:2,pointBackgroundColor:GRN},
+        {label:'Legacy Compliance (Checkit)',data:[2,1,1,1,2,2],backgroundColor:'rgba(141,198,63,0.06)',borderColor:LGND,borderWidth:1.5,pointBackgroundColor:LGND},
+        {label:'Niche Tags (Wiliot)',data:[1,1,1,1,1,3],backgroundColor:'rgba(141,198,63,0.05)',borderColor:'rgba(141,198,63,0.5)',borderWidth:1.5,pointBackgroundColor:'rgba(141,198,63,0.5)'},
+        {label:'Binary Sensors',data:[1,1,1,1,1,4],backgroundColor:'rgba(26,61,34,0.05)',borderColor:'rgba(26,61,34,0.4)',borderWidth:1.5,pointBackgroundColor:'rgba(26,61,34,0.4)'},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{r:{backgroundColor:'rgba(27,122,62,0.01)',grid:{color:GRID},pointLabels:{color:MUTED,font:{size:10}},ticks:{display:false},min:0,max:5}}}
+  });
+
+  // Market Growth
+  new Chart(document.getElementById('chartGrowth').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['2022','2023','2024','2025','2026','2027','2028','2030'],
+      datasets:[
+        {label:'Global AI Cold-Chain Market (USD B)',data:[8,10,12,17,23,32,46,80],backgroundColor:GRN2,borderRadius:5,barPercentage:0.55},
+        {type:'line',label:'UK AI PerishOps Adoption %',data:[null,2,4,8,15,25,38,58],borderColor:LGND,borderWidth:2,yAxisID:'y2',tension:0.4,pointBackgroundColor:LGND,fill:false}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:12,font:{size:10}}}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>'$'+v+'B'}},y2:{position:'right',grid:{display:false},ticks:{color:MUTED,callback:v=>v+'%'}}}}
+  });
+}
+</script>
+</body>
+</html>
