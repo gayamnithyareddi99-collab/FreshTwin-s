@@ -1458,116 +1458,232 @@ footer{background:var(--footer-bg);padding:clamp(48px,6vw,80px) 0 0;}
      PAGE : CONTACT
 ═══════════════════════════════════════════════ -->
 <div class="page" id="page-contact">
+
+  <!-- HERO -->
   <section style="background:linear-gradient(140deg,#EDF7EE 0%,#D9F0DC 60%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
     <div class="container">
+
       <div class="label-tag">Get In Touch</div>
-      <h2 class="section-h2 dark">Request a Demo or Join<br>the FreshTwin's Pilot Programme</h2>
+
+      <h2 class="section-h2 dark">
+        Request a Demo or Join<br>
+        the FreshTwin's Pilot Programme
+      </h2>
+
       <div class="section-divider divider-blue"></div>
+
       <p class="para-dark" style="max-width:680px;">
-        Ready to close the Shelf-Life Gap? Whether you're an independent grocer, convenience franchise, or hospitality group  our team will demonstrate exactly how FreshTwin's PerishOps Intelligence can protect your margins from day one.
+        Ready to close the Shelf-Life Gap? Whether you're an independent grocer, convenience franchise, or hospitality group our team will demonstrate exactly how FreshTwin's PerishOps Intelligence can protect your margins from day one.
       </p>
+
     </div>
   </section>
 
+  <!-- CONTACT -->
   <section class="section-light">
     <div class="container">
+
       <div class="contact-wrap">
+
+        <!-- FORM -->
         <div class="form-card">
+
           <div class="label-tag">Request Demo</div>
-          <h3 style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:24px;">Book a Platform Demonstration</h3>
-          <div class="form-group">
-            <label>Your Name</label>
-            <input type="text" placeholder="e.g. Sarah Johnson">
-          </div>
-          <div class="form-group">
-            <label>Business Name</label>
-            <input type="text" placeholder="e.g. Central Park Grocers Ltd">
-          </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" placeholder="sarah@yourgrocer.co.uk">
-          </div>
-          <div class="form-group">
-            <label>Business Type</label>
-            <select>
-              <option>Independent Grocer / Convenience Store</option>
-              <option>Multi-Site Franchise / Retail Group</option>
-              <option>Hospitality Group / Restaurant Chain</option>
-              <option>Dark Kitchen / QSR Operator</option>
-              <option>Food Service / Catering Business</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Number of Sites</label>
-            <select>
-              <option>1 site (Single Location)</option>
-              <option>2–5 sites</option>
-              <option>6–20 sites</option>
-              <option>20+ sites</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Message / Questions</label>
-            <textarea placeholder="Tell us about your current cold-chain challenges, which SKU categories are most problematic, or what's driving your interest in FreshTwin's..."></textarea>
-          </div>
-          <button class="btn-primary" style="width:100%;justify-content:center;">Book My Platform Demo →</button>
+
+          <h3 style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:24px;">
+            Book a Platform Demonstration
+          </h3>
+
+          <!-- WEB3FORMS -->
+          <form action="https://api.web3forms.com/submit" method="POST">
+
+            <!-- ACCESS KEY -->
+            <input type="hidden"
+                   name="access_key"
+                   value="a5a4dee2-ae31-4f2d-b67a-4247a73950db">
+
+            <!-- OPTIONAL -->
+            <input type="hidden"
+                   name="subject"
+                   value="New FreshTwin Demo Request">
+
+            <input type="hidden"
+                   name="from_name"
+                   value="FreshTwin Website">
+
+            <!-- NAME -->
+            <div class="form-group">
+              <label>Your Name</label>
+
+              <input type="text"
+                     name="name"
+                     placeholder="e.g. Sarah Johnson"
+                     required>
+            </div>
+
+            <!-- BUSINESS -->
+            <div class="form-group">
+              <label>Business Name</label>
+
+              <input type="text"
+                     name="business_name"
+                     placeholder="e.g. Central Park Grocers Ltd">
+            </div>
+
+            <!-- EMAIL -->
+            <div class="form-group">
+              <label>Email Address</label>
+
+              <input type="email"
+                     name="email"
+                     placeholder="sarah@yourgrocer.co.uk"
+                     required>
+            </div>
+
+            <!-- BUSINESS TYPE -->
+            <div class="form-group">
+              <label>Business Type</label>
+
+              <select name="business_type">
+                <option>Independent Grocer / Convenience Store</option>
+                <option>Multi-Site Franchise / Retail Group</option>
+                <option>Hospitality Group / Restaurant Chain</option>
+                <option>Dark Kitchen / QSR Operator</option>
+                <option>Food Service / Catering Business</option>
+              </select>
+            </div>
+
+            <!-- NUMBER OF SITES -->
+            <div class="form-group">
+              <label>Number of Sites</label>
+
+              <select name="site_count">
+                <option>1 site (Single Location)</option>
+                <option>2–5 sites</option>
+                <option>6–20 sites</option>
+                <option>20+ sites</option>
+              </select>
+            </div>
+
+            <!-- MESSAGE -->
+            <div class="form-group">
+              <label>Message / Questions</label>
+
+              <textarea
+                name="message"
+                placeholder="Tell us about your current cold-chain challenges, which SKU categories are most problematic, or what's driving your interest in FreshTwin's..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- SUBMIT -->
+            <button class="btn-primary"
+                    style="width:100%;justify-content:center;"
+                    type="submit">
+              Book My Platform Demo →
+            </button>
+
+          </form>
+
         </div>
 
+        <!-- CONTACT INFO -->
         <div class="contact-info">
+
           <h3>Get in Touch Directly</h3>
-          <p>Our founding team personally reviews every demo request and will respond within 24 hours with a tailored demonstration plan for your store estate.</p>
+
+          <p>
+            Our founding team personally reviews every demo request and will respond within 24 hours with a tailored demonstration plan for your store estate.
+          </p>
+
           <div class="contact-detail">
-            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <div class="icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+
             <div class="text">
-              <strong>Ripen Patel  CEO</strong>
+              <strong>Ripen Patel CEO</strong>
               <span>ripenpatel009@gmail.com</span>
             </div>
           </div>
+
           <div class="contact-detail">
-            <div class="icon"><i class="fas fa-phone"></i></div>
+            <div class="icon">
+              <i class="fas fa-phone"></i>
+            </div>
+
             <div class="text">
               <strong>Direct Line</strong>
               <span>(+44) 7436 959818</span>
             </div>
           </div>
+
           <div class="contact-detail">
-            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <div class="icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+
             <div class="text">
-              <strong>Divyam Patel  CTO</strong>
+              <strong>Divyam Patel CTO</strong>
               <span>divyampatel27@gmail.com</span>
             </div>
           </div>
+
           <div class="contact-detail">
-            <div class="icon"><i class="fas fa-phone"></i></div>
+            <div class="icon">
+              <i class="fas fa-phone"></i>
+            </div>
+
             <div class="text">
               <strong>Technical Enquiries</strong>
               <span>(+44) 7901 137440</span>
             </div>
           </div>
+
           <div class="contact-detail">
-            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+
             <div class="text">
               <strong>Headquarters</strong>
               <span>London, United Kingdom · UK GDPR Compliant</span>
             </div>
           </div>
+
           <div class="contact-detail">
-            <div class="icon"><i class="fas fa-leaf"></i></div>
+            <div class="icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+
             <div class="text">
               <strong>Certifications</strong>
               <span>FSA Aligned · Net Zero Committed · UK Cyber Essentials</span>
             </div>
           </div>
+
+          <!-- PILOT PROGRAMME -->
           <div style="margin-top:28px;padding:20px;background:linear-gradient(135deg,rgba(27,122,62,0.08),rgba(141,198,63,0.1));border-radius:14px;border:1px solid rgba(27,122,62,0.2);">
-            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:10px;">PILOT PROGRAMME</div>
-            <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">We are actively recruiting 8–12 London-based independent grocers and convenience franchises for our next 8-week pilot cohort. Pilot sites receive complimentary Quality Logic Node deployment, SDD calibration, and priority access to the Professional Plan at Starter pricing.</p>
+
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:10px;">
+              PILOT PROGRAMME
+            </div>
+
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">
+              We are actively recruiting 8–12 London-based independent grocers and convenience franchises for our next 8-week pilot cohort. Pilot sites receive complimentary Quality Logic Node deployment, SDD calibration, and priority access to the Professional Plan at Starter pricing.
+            </p>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
   </section>
-</div><!-- end page-contact -->
 
+</div>
+<!-- end page-contact -->
 
 <!-- ═══════════════════════════════════════════
      FOOTER
